@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { getCalendarColumnSize } from "@/util/util";
+import { getCalendarColumnSize } from "@/utils/util";
 
 const COLUMN_SIZE = getCalendarColumnSize();
 

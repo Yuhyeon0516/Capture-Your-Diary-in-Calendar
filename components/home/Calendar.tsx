@@ -6,7 +6,7 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { getCalendarColumns, getDayColor, getDayText } from "@/util/util";
+import { getCalendarColumns, getDayColor, getDayText } from "@/utils/util";
 import dayjs from "dayjs";
 import Colors from "@/constants/Colors";
 import CalendarArrowButton from "./CalendarArrowButton";
