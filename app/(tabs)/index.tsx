@@ -5,12 +5,15 @@ import Calendar from "@/components/home/Calendar";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import Colors from "@/constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
+import LogoHeader from "@/components/common/LogoHeader";
+import HomeHeaderRightComponent from "@/components/home/HomeHeaderRightComponent";
 
 export default function index() {
   const tabBarHeight = useBottomTabBarHeight();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <LogoHeader rightComponent={() => <HomeHeaderRightComponent />} />
       <Calendar />
 
       <TouchableOpacity
