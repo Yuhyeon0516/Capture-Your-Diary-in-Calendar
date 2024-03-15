@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Link } from "expo-router";
 
-export default function login() {
+export default function register() {
   return (
     <View>
-      <Text>login</Text>
+      <Text>register</Text>
     </View>
   );
 }
