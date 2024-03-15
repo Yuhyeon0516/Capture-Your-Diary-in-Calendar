@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { Dimensions } from "react-native";
 
 export function useCalendar(now: dayjs.Dayjs) {
   const [selectedDate, setSelectedDate] = useState(now);
