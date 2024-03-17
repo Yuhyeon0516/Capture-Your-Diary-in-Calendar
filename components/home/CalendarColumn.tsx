@@ -8,15 +8,17 @@ type CalendarColumnProp = {
   text: string;
   color: string;
   opacity: number;
+  isDisabled: boolean;
 };
 
 export default function CalendarColumn({
   text,
   color,
   opacity,
+  isDisabled,
 }: CalendarColumnProp) {
   return (
-    <TouchableOpacity style={styles.column}>
+    <TouchableOpacity style={styles.column} disabled={isDisabled}>
       <Text style={{ color, fontSize: 16, fontWeight: "bold", opacity }}>
         {text}
       </Text>
