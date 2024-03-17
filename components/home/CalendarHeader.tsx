@@ -51,6 +51,7 @@ export default function CalendarHeader({
               text={getDayText(day)}
               color={getDayColor(day)}
               opacity={1}
+              isDisabled
             />
           );
         })}
