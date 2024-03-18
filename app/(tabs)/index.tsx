@@ -7,9 +7,11 @@ import Colors from "@/constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 import LogoHeader from "@/components/common/LogoHeader";
 import HomeHeaderRightComponent from "@/components/home/HomeHeaderRightComponent";
+import { useRouter } from "expo-router";
 
 export default function index() {
   const tabBarHeight = useBottomTabBarHeight();
+  const router = useRouter();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -18,6 +20,7 @@ export default function index() {
 
       <TouchableOpacity
         style={[styles.floatingButton, { bottom: tabBarHeight + 15 }]}
+        onPress={() => router.navigate("/(modals)/addDiary")}
       >
         <FontAwesome name="plus" color={"white"} size={32} />
       </TouchableOpacity>
