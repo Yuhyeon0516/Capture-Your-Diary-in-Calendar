@@ -1,21 +1,24 @@
 import {
-  Alert,
   Dimensions,
   Image,
+  KeyboardAvoidingView,
+  NativeModules,
+  Platform,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import Colors from "@/constants/Colors";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import CustomTextInput from "../common/CustomTextInput";
 
 export default function AddDiary() {
   const [imageResult, setImageResult] =
     useState<ImagePicker.ImagePickerResult | null>(null);
-
   const { width } = Dimensions.get("window");
 
   async function getImage() {
@@ -32,40 +35,88 @@ export default function AddDiary() {
   }
 
   return (
-    <View style={styles.container}>
+    <>
+      <View>
+        <TouchableOpacity
+          style={[
+            {
+              width: width - 40,
+              height: width - 40,
+            },
+            styles.imageBox,
+          ]}
+          onPress={getImage}
+        >
+          {!imageResult ? (
+            <View style={styles.noImage}>
+              <FontAwesome name="plus" color={Colors.white} size={36} />
+            </View>
+          ) : (
+            <View style={styles.image}>
+              <Image
+                source={{ uri: imageResult.assets![0].uri }}
+                width={width - 40}
+                height={width - 40}
+                style={{ objectFit: "cover" }}
+              />
+            </View>
+          )}
+        </TouchableOpacity>
+      </View>
+
+      <CustomTextInput text="제목" />
+
+      <View style={{ marginTop: 15, gap: 8 }}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "bold",
+            marginLeft: 4,
+            color: Colors.primary,
+          }}
+        >
+          내용
+        </Text>
+        <TextInput
+          style={{
+            width: "100%",
+            height: 200,
+            borderWidth: StyleSheet.hairlineWidth,
+            borderRadius: 10,
+            paddingHorizontal: 10,
+            paddingTop: 15,
+            paddingBottom: 15,
+            justifyContent: "flex-start",
+          }}
+          multiline
+          autoCapitalize="none"
+          textAlignVertical="top"
+          cursorColor={Colors.black}
+          blurOnSubmit={false}
+        />
+      </View>
       <TouchableOpacity
-        style={[
-          {
-            width: width - 40,
-            height: width - 40,
-          },
-          styles.imageBox,
-        ]}
-        onPress={getImage}
+        style={{
+          width: "100%",
+          height: 60,
+          backgroundColor: Colors.primary,
+          marginTop: 20,
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: 10,
+        }}
       >
-        {!imageResult ? (
-          <View style={styles.noImage}>
-            <FontAwesome name="plus" color={Colors.white} size={36} />
-          </View>
-        ) : (
-          <View style={styles.image}>
-            <Image
-              source={{ uri: imageResult.assets![0].uri }}
-              width={width - 40}
-              height={width - 40}
-              style={{ objectFit: "cover" }}
-            />
-          </View>
-        )}
+        <Text style={{ fontSize: 18, fontWeight: "bold", color: Colors.white }}>
+          추가
+        </Text>
       </TouchableOpacity>
-    </View>
+
+      <View style={{ height: 70 }} />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   imageBox: {
     borderRadius: 20,
     overflow: "hidden",
