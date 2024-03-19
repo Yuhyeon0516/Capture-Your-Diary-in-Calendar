@@ -5,11 +5,10 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import Colors from "@/constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
@@ -17,6 +16,8 @@ import CustomMultiTextInput from "../common/CustomMultiTextInput";
 import { uploadDiaryAndImage, uploadImage } from "@/utils/supabase";
 import { useRouter } from "expo-router";
 import CustomTextInput from "../common/CustomTextInput";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import PrimaryButton from "../common/PrimaryButton";
 
 type AddDiaryProp = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,6 +30,7 @@ export default function AddDiary({ setIsLoading }: AddDiaryProp) {
   const [description, setDescription] = useState("");
   const { width } = Dimensions.get("window");
   const router = useRouter();
+  const safeAreaInsets = useSafeAreaInsets();
 
   async function getImage() {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -129,24 +131,9 @@ export default function AddDiary({ setIsLoading }: AddDiaryProp) {
         onChangeText={onChangeDescription}
       />
 
-      <TouchableOpacity
-        style={{
-          width: "100%",
-          height: 60,
-          backgroundColor: Colors.primary,
-          marginTop: 20,
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: 10,
-        }}
-        onPress={uploadDiary}
-      >
-        <Text style={{ fontSize: 18, fontWeight: "bold", color: Colors.white }}>
-          추가
-        </Text>
-      </TouchableOpacity>
+      <PrimaryButton text="추가" onPress={uploadDiary} />
 
-      <View style={{ height: 50 }} />
+      <View style={{ height: safeAreaInsets.bottom + 20 }} />
     </KeyboardAvoidingView>
   );
 }
