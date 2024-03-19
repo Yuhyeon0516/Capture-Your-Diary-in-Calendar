@@ -2,7 +2,17 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
 
-export default function CustomMultiTextInput({ text }: { text: string }) {
+type CustomMultiTextInputProp = {
+  text: string;
+  value: string;
+  onChangeText: (value: string) => void;
+};
+
+export default function CustomMultiTextInput({
+  text,
+  value,
+  onChangeText,
+}: CustomMultiTextInputProp) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{text}</Text>
@@ -14,6 +24,8 @@ export default function CustomMultiTextInput({ text }: { text: string }) {
         cursorColor={Colors.black}
         blurOnSubmit={false}
         scrollEnabled={false}
+        value={value}
+        onChangeText={onChangeText}
       />
     </View>
   );
