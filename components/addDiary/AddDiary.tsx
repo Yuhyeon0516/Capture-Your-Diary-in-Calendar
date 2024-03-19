@@ -2,8 +2,6 @@ import {
   Dimensions,
   Image,
   KeyboardAvoidingView,
-  NativeModules,
-  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -35,7 +33,7 @@ export default function AddDiary() {
   }
 
   return (
-    <>
+    <KeyboardAvoidingView>
       <View>
         <TouchableOpacity
           style={[
@@ -93,6 +91,7 @@ export default function AddDiary() {
           textAlignVertical="top"
           cursorColor={Colors.black}
           blurOnSubmit={false}
+          scrollEnabled={false}
         />
       </View>
       <TouchableOpacity
@@ -111,8 +110,8 @@ export default function AddDiary() {
         </Text>
       </TouchableOpacity>
 
-      <View style={{ height: 70 }} />
-    </>
+      <View style={{ height: 50 }} />
+    </KeyboardAvoidingView>
   );
 }
 
