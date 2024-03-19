@@ -31,11 +31,13 @@ export default function TitleCloseHeader({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
+    height: 70,
     paddingVertical: 10,
     gap: 4,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: Colors.white,
   },
   titleText: {
     fontSize: 24,

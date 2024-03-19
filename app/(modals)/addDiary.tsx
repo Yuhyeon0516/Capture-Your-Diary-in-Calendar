@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TitleCloseHeader from "@/components/common/TitleCloseHeader";
@@ -20,7 +20,13 @@ export default function AddDiaryPage() {
         title="하루 추가"
         description="여러분의 하루를 사진과 함께 알려주세요!"
       />
-      <AddDiary />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        keyboardDismissMode="interactive"
+      >
+        <AddDiary />
+      </ScrollView>
     </View>
   );
 }
@@ -29,5 +35,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
+    backgroundColor: "white",
   },
 });
