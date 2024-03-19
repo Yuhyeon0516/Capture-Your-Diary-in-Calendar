@@ -1,4 +1,5 @@
 import {
+  Alert,
   Dimensions,
   Image,
   KeyboardAvoidingView,
@@ -13,23 +14,43 @@ import * as ImagePicker from "expo-image-picker";
 import Colors from "@/constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 import CustomTextInput from "../common/CustomTextInput";
+import CustomMultiTextInput from "../common/CustomMultiTextInput";
+import { uploadImage } from "@/utils/supabase";
+import { useRouter } from "expo-router";
 
-export default function AddDiary() {
+type AddDiaryProp = {
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function AddDiary({ setIsLoading }: AddDiaryProp) {
   const [imageResult, setImageResult] =
     useState<ImagePicker.ImagePickerResult | null>(null);
   const { width } = Dimensions.get("window");
+  const router = useRouter();
 
   async function getImage() {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 0.8,
-      base64: true,
+      quality: 0.75,
     });
 
     if (!result.canceled) {
       setImageResult(result);
     }
+  }
+
+  async function uploadDiary() {
+    if (!imageResult) {
+      Alert.alert(
+        "이미지를 업로드해주세요.",
+        "이미지 1장을 선택하여 업로드해주세요!"
+      );
+      return;
+    }
+    setIsLoading(true);
+    const result = await uploadImage(imageResult);
+    setIsLoading(false);
+    router.back();
   }
 
   return (
@@ -64,36 +85,8 @@ export default function AddDiary() {
 
       <CustomTextInput text="제목" />
 
-      <View style={{ marginTop: 15, gap: 8 }}>
-        <Text
-          style={{
-            fontSize: 18,
-            fontWeight: "bold",
-            marginLeft: 4,
-            color: Colors.primary,
-          }}
-        >
-          내용
-        </Text>
-        <TextInput
-          style={{
-            width: "100%",
-            height: 200,
-            borderWidth: StyleSheet.hairlineWidth,
-            borderRadius: 10,
-            paddingHorizontal: 10,
-            paddingTop: 15,
-            paddingBottom: 15,
-            justifyContent: "flex-start",
-          }}
-          multiline
-          autoCapitalize="none"
-          textAlignVertical="top"
-          cursorColor={Colors.black}
-          blurOnSubmit={false}
-          scrollEnabled={false}
-        />
-      </View>
+      <CustomMultiTextInput text="내용" />
+
       <TouchableOpacity
         style={{
           width: "100%",
@@ -104,6 +97,7 @@ export default function AddDiary() {
           justifyContent: "center",
           borderRadius: 10,
         }}
+        onPress={uploadDiary}
       >
         <Text style={{ fontSize: 18, fontWeight: "bold", color: Colors.white }}>
           추가
