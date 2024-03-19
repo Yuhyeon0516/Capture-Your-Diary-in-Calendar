@@ -1,12 +1,14 @@
-import { Platform, StyleSheet, View } from "react-native";
-import React from "react";
+import { ActivityIndicator, Platform, StyleSheet, View } from "react-native";
+import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TitleCloseHeader from "@/components/common/TitleCloseHeader";
 import AddDiary from "@/components/addDiary/AddDiary";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Colors from "@/constants/Colors";
 
 export default function AddDiaryPage() {
   const safeAreaInsets = useSafeAreaInsets();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <View
@@ -27,8 +29,17 @@ export default function AddDiaryPage() {
         keyboardDismissMode="interactive"
         keyboardShouldPersistTaps="handled"
       >
-        <AddDiary />
+        <AddDiary setIsLoading={setIsLoading} />
       </KeyboardAwareScrollView>
+
+      {isLoading && (
+        <ActivityIndicator
+          color={Colors.primary}
+          size={"large"}
+          style={{ position: "absolute" }}
+          hidesWhenStopped={true}
+        />
+      )}
     </View>
   );
 }
@@ -38,5 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
