@@ -1,8 +1,18 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import { Keyboard, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { ForwardedRef, forwardRef } from "react";
 import Colors from "@/constants/Colors";
 
-export default function CustomTextInput({ text }: { text: string }) {
+type CustomTextInputProp = {
+  text: string;
+  value: string;
+  onChangeText: (value: string) => void;
+};
+
+export default function CustomTextInput({
+  text,
+  value,
+  onChangeText,
+}: CustomTextInputProp) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{text}</Text>
@@ -11,6 +21,9 @@ export default function CustomTextInput({ text }: { text: string }) {
         autoCapitalize="none"
         cursorColor={Colors.black}
         blurOnSubmit={false}
+        onChangeText={onChangeText}
+        value={value}
+        onSubmitEditing={Keyboard.dismiss}
       />
     </View>
   );
