@@ -68,7 +68,9 @@ export default function AddDiary({ setIsLoading }: AddDiaryProp) {
 
     setIsLoading(true);
     try {
-      const result = await uploadImage(imageResult);
+      await uploadImage(imageResult, 300, "1234");
+      await uploadImage(imageResult, 150, "1234");
+      const result = await uploadImage(imageResult, 50, "1234");
       if (!result) {
         Alert.alert("이미지 경로 에러", "이미지의 경로를 찾을 수 없습니다.");
         throw Error();

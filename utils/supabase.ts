@@ -4,6 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 import * as ImagePicker from "expo-image-picker";
 import { Alert, Platform } from "react-native";
 import dayjs from "dayjs";
+import * as ImageManipulator from "expo-image-manipulator";
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL as string;
 const supabaseKey = process.env.EXPO_PUBLIC_SUPABASE_KEY as string;
@@ -17,14 +18,23 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
   },
 });
 
-export async function uploadImage(result: ImagePicker.ImagePickerResult) {
+export async function uploadImage(
+  result: ImagePicker.ImagePickerResult,
+  resizeWidth: number,
+  userCode: string
+) {
   if (!result.canceled) {
-    const res = await fetch(result.assets[0].uri);
+    const todayString = dayjs().format("YYYY.MM.DD");
+    const manipulatorResult = await ImageManipulator.manipulateAsync(
+      result.assets[0].uri,
+      [{ resize: { width: resizeWidth } }]
+    );
+    const res = await fetch(manipulatorResult.uri);
     const blob = await res.blob();
     const arrayBuffer = await new Response(blob).arrayBuffer();
     const { data, error } = await supabase.storage
       .from("image")
-      .upload("1.jpeg", arrayBuffer, {
+      .upload(`${userCode}/${todayString}_${resizeWidth}.jpeg`, arrayBuffer, {
         contentType: "image/jpeg",
         upsert: true,
       });
@@ -39,7 +49,8 @@ export async function uploadImage(result: ImagePicker.ImagePickerResult) {
       throw Error();
     }
 
-    return supabase.storage.from("image").getPublicUrl("1.jpeg").data.publicUrl;
+    return supabase.storage.from("image").getPublicUrl(data.path).data
+      .publicUrl;
   }
 }
 
@@ -50,7 +61,7 @@ export async function uploadDiaryAndImage(
   imagePath: string
 ) {
   const todayString = dayjs().format("/YYYY.MM.DD");
-  const { data, error } = await supabase.from("diary").upsert({
+  const { error } = await supabase.from("diary").upsert({
     id: userCode + todayString,
     title,
     description,
