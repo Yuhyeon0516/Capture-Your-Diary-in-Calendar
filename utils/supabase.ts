@@ -79,3 +79,21 @@ export async function uploadDiaryAndImage(
     throw Error();
   }
 }
+
+export async function getUser() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  return user;
+}
+
+export async function getScreenType(): Promise<"auth" | "main"> {
+  const user = await getUser();
+
+  if (!user) {
+    return "auth";
+  }
+
+  return "main";
+}

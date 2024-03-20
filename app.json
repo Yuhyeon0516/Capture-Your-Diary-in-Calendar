@@ -1,5 +1,6 @@
 {
   "expo": {
+    "jsEngine": "hermes",
     "name": "capture-your-diary-in-calendar",
     "slug": "capture-your-diary-in-calendar",
     "version": "1.0.0",
@@ -12,15 +13,23 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yuhyeon.captureyourdiaryincalendar",
+      "jsEngine": "jsc"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.yuhyeon.captureyourdiaryincalendar"
     },
     "web": {
       "bundler": "metro",
@@ -34,10 +43,22 @@
         {
           "photosPermission": "캘린더에 사진을 업로드하기 위해 사진 접근 권한이 필요합니다."
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true
     }
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-5956225840587687~2121397424",
+    "ios_app_id": "ca-app-pub-5956225840587687~3934894740"
   }
 }

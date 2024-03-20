@@ -2,10 +2,12 @@ import { Image, StyleSheet, View } from "react-native";
 import React from "react";
 
 type LogoHeader = {
-  rightComponent: () => React.JSX.Element;
+  rightComponent?: () => React.JSX.Element;
 };
 
-export default function LogoHeader({ rightComponent }: LogoHeader) {
+export default function LogoHeader({
+  rightComponent = () => <></>,
+}: LogoHeader) {
   return (
     <View style={styles.container}>
       <Image

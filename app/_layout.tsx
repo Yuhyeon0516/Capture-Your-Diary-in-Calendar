@@ -1,8 +1,9 @@
+import { getScreenType, getUser } from "@/utils/supabase";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -22,8 +23,8 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
+  const [screen, setScreen] = useState<"auth" | "main">("auth");
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -34,14 +35,21 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  useEffect(() => {
+    (async () => {
+      const screenType = await getScreenType();
+      setScreen(screenType);
+    })();
+  }, [setScreen]);
+
   if (!loaded) {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return screen !== "auth" ? <AuthLayoutNav /> : <MainLayoutNav />;
 }
 
-function RootLayoutNav() {
+function MainLayoutNav() {
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -49,6 +57,15 @@ function RootLayoutNav() {
         name="(modals)/addDiary"
         options={{ headerShown: false, presentation: "modal" }}
       />
+    </Stack>
+  );
+}
+
+function AuthLayoutNav() {
+  return (
+    <Stack>
+      <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
+      <Stack.Screen name="(auth)/register" options={{ headerShown: false }} />
     </Stack>
   );
 }

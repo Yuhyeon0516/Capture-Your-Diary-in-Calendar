@@ -55,6 +55,8 @@ export default function TabLayout() {
               <Ionicons name={"share-outline"} color={color} size={size} />
             </View>
           ),
+          // TO-DO: 추후 공유 기능은 오픈
+          href: null,
         }}
       />
 
