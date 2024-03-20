@@ -1,22 +1,49 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Calendar from "@/components/home/Calendar";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import Colors from "@/constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 import LogoHeader from "@/components/common/LogoHeader";
-import HomeHeaderRightComponent from "@/components/home/HomeHeaderRightComponent";
+// import HomeHeaderRightComponent from "@/components/home/HomeHeaderRightComponent";
 import { useRouter } from "expo-router";
 import {
   BannerAd,
   BannerAdSize,
   TestIds,
 } from "react-native-google-mobile-ads";
+import { getMyDiary } from "@/utils/supabase";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { DIARY } from "@/utils/recoil";
 
 export default function index() {
+  const [loading, setLoading] = useState(false);
+  const setDiary = useSetRecoilState(DIARY);
   const tabBarHeight = useBottomTabBarHeight();
   const router = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const diary = await getMyDiary();
+      setDiary(diary);
+      setLoading(false);
+    })();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator color={Colors.primary} size={"large"} />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
