@@ -1,19 +1,21 @@
-import { getScreenType, getUser } from "@/utils/supabase";
+import { SCREENTYPE } from "@/utils/recoil";
+import { getScreenType } from "@/utils/supabase";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { RecoilRoot, useRecoilState } from "recoil";
 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from "expo-router";
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
-};
+// export const unstable_settings = {
+//   // Ensure that reloading on `/modal` keeps a back button present.
+//   initialRouteName: "(tabs)",
+// };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -23,7 +25,6 @@ export default function RootLayout() {
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
-  const [screen, setScreen] = useState<"auth" | "main">("auth");
 
   useEffect(() => {
     if (error) throw error;
@@ -35,6 +36,20 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  if (!loaded) {
+    return null;
+  }
+
+  return (
+    <RecoilRoot>
+      <RootLayoutNav />
+    </RecoilRoot>
+  );
+}
+
+function RootLayoutNav() {
+  const [screen, setScreen] = useRecoilState(SCREENTYPE);
+
   useEffect(() => {
     (async () => {
       const screenType = await getScreenType();
@@ -42,30 +57,18 @@ export default function RootLayout() {
     })();
   }, [setScreen]);
 
-  if (!loaded) {
-    return null;
-  }
-
-  return screen !== "auth" ? <AuthLayoutNav /> : <MainLayoutNav />;
-}
-
-function MainLayoutNav() {
-  return (
+  return screen !== "auth" ? (
+    <Stack>
+      <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
+      <Stack.Screen name="(auth)/register" options={{ headerShown: false }} />
+    </Stack>
+  ) : (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
         name="(modals)/addDiary"
         options={{ headerShown: false, presentation: "modal" }}
       />
-    </Stack>
-  );
-}
-
-function AuthLayoutNav() {
-  return (
-    <Stack>
-      <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)/register" options={{ headerShown: false }} />
     </Stack>
   );
 }

@@ -5,6 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Alert, Platform } from "react-native";
 import dayjs from "dayjs";
 import * as ImageManipulator from "expo-image-manipulator";
+import { Diary } from "@/types/diary";
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL as string;
 const supabaseKey = process.env.EXPO_PUBLIC_SUPABASE_KEY as string;
@@ -96,4 +97,13 @@ export async function getScreenType(): Promise<"auth" | "main"> {
   }
 
   return "main";
+}
+
+export async function getMyDiary() {
+  const diary = await supabase
+    .from("diary")
+    .select()
+    .filter("user_code", "eq", "1234");
+
+  return diary.data as Diary[];
 }

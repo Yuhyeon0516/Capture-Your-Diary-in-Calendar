@@ -20,6 +20,7 @@
     "dayjs": "^1.11.10",
     "expo": "~50.0.13",
     "expo-build-properties": "~0.11.1",
+    "expo-dev-client": "~3.3.11",
     "expo-font": "~11.10.3",
     "expo-image-manipulator": "~11.8.0",
     "expo-image-picker": "~14.7.1",
@@ -38,7 +39,7 @@
     "react-native-screens": "~3.29.0",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.6",
-    "expo-dev-client": "~3.3.11"
+    "recoil": "^0.7.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

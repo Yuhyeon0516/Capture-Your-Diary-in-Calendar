@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { getCalendarColumnSize } from "@/utils/util";
 
@@ -8,21 +8,19 @@ type CalendarColumnProp = {
   text: string;
   color: string;
   opacity: number;
-  isDisabled: boolean;
 };
 
 export default function CalendarColumn({
   text,
   color,
   opacity,
-  isDisabled,
 }: CalendarColumnProp) {
   return (
-    <TouchableOpacity style={styles.column} disabled={isDisabled}>
+    <View style={styles.column}>
       <Text style={{ color, fontSize: 16, fontWeight: "bold", opacity }}>
         {text}
       </Text>
-    </TouchableOpacity>
+    </View>
   );
 }
 
