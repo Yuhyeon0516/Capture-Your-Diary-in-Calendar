@@ -22,7 +22,10 @@ export default function index() {
     <SafeAreaView style={{ flex: 1 }}>
       {/* <LogoHeader rightComponent={() => <HomeHeaderRightComponent />} /> */}
       <LogoHeader />
-      <BannerAd unitId={TestIds.BANNER} size={BannerAdSize.BANNER} />
+      <BannerAd
+        unitId={TestIds.ADAPTIVE_BANNER}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+      />
       <Calendar />
 
       <TouchableOpacity
