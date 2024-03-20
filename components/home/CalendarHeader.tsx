@@ -18,6 +18,7 @@ export default function CalendarHeader({
   subtractOneMonth,
 }: CalendarHeaderProp) {
   const currentDateText = dayjs(selectedDate).format("YYYY.MM");
+  const todayText = dayjs().format("YYYY.MM");
 
   return (
     <View>
@@ -38,8 +39,11 @@ export default function CalendarHeader({
         <CalendarArrowButton
           direction="right"
           onPress={addOneMonth}
-          iconColor={Colors.primary}
+          iconColor={
+            currentDateText === todayText ? Colors.gray : Colors.primary
+          }
           iconSize={32}
+          disabled={currentDateText === todayText ? true : false}
         />
       </View>
 

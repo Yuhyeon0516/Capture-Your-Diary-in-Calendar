@@ -7,6 +7,7 @@ type CalendarArrowButtonProp = {
   onPress: () => void;
   iconSize: number;
   iconColor: string;
+  disabled?: boolean;
 };
 
 export default function CalendarArrowButton({
@@ -14,11 +15,13 @@ export default function CalendarArrowButton({
   onPress,
   iconSize,
   iconColor,
+  disabled = false,
 }: CalendarArrowButtonProp) {
   return (
     <TouchableOpacity
       style={{ paddingHorizontal: 20, paddingVertical: 15 }}
       onPress={onPress}
+      disabled={disabled}
     >
       {direction === "left" ? (
         <MaterialCommunityIcons
