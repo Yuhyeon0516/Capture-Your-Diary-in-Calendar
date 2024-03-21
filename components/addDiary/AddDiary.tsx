@@ -17,6 +17,8 @@ import { useRouter } from "expo-router";
 import CustomTextInput from "../common/CustomTextInput";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import PrimaryButton from "../common/PrimaryButton";
+import { useSetRecoilState } from "recoil";
+import { DIARY } from "@/utils/recoil";
 
 type AddDiaryProp = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,6 +32,7 @@ export default function AddDiary({ setIsLoading }: AddDiaryProp) {
   const { width } = Dimensions.get("window");
   const router = useRouter();
   const safeAreaInsets = useSafeAreaInsets();
+  const setDiary = useSetRecoilState(DIARY);
 
   async function getImage() {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -76,8 +79,18 @@ export default function AddDiary({ setIsLoading }: AddDiaryProp) {
         Alert.alert("이미지 경로 에러", "이미지의 경로를 찾을 수 없습니다.");
         throw Error();
       }
-      await uploadDiaryAndImage("1234", title, description, result!);
-      router.back();
+      const diaryResult = await uploadDiaryAndImage(
+        "1234",
+        title,
+        description,
+        result!
+      );
+
+      setDiary((prev) => [...prev, diaryResult]);
+
+      setTimeout(() => {
+        router.back();
+      }, 300);
     } catch (error) {
     } finally {
       setIsLoading(false);

@@ -62,13 +62,16 @@ export async function uploadDiaryAndImage(
   imagePath: string
 ) {
   const todayString = dayjs().format("/YYYY.MM.DD");
-  const { error } = await supabase.from("diary").upsert({
-    id: userCode + todayString,
-    title,
-    description,
-    user_code: userCode,
-    image_path: imagePath,
-  });
+  const { error, data } = await supabase
+    .from("diary")
+    .upsert({
+      id: userCode + todayString,
+      title,
+      description,
+      user_code: userCode,
+      image_path: imagePath,
+    })
+    .select();
 
   if (error) {
     Alert.alert(
@@ -79,6 +82,8 @@ export async function uploadDiaryAndImage(
     );
     throw Error();
   }
+
+  return data[0] as Diary;
 }
 
 export async function getUser() {
