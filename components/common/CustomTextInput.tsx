@@ -1,5 +1,5 @@
 import { Keyboard, StyleSheet, Text, TextInput, View } from "react-native";
-import React, { ForwardedRef, forwardRef } from "react";
+import React from "react";
 import Colors from "@/constants/Colors";
 
 type CustomTextInputProp = {

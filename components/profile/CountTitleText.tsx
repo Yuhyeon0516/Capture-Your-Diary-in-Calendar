@@ -1,18 +1,23 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
 
 type CountTitleTextProps = {
   title: string;
   count: number;
+  onPress: () => void;
 };
 
-export default function CountTitleText({ title, count }: CountTitleTextProps) {
+export default function CountTitleText({
+  title,
+  count,
+  onPress,
+}: CountTitleTextProps) {
   return (
-    <View style={styles.conatiner}>
+    <TouchableOpacity style={styles.conatiner} onPress={onPress}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.count}>{count}</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 
