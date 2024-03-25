@@ -5,6 +5,7 @@ import CountTitleText from "./CountTitleText";
 import SectionTitle from "./SectionTitle";
 
 export default function MyProfile() {
+  function onPress() {}
   return (
     <View style={styles.container}>
       <SectionTitle text="프로필" />
@@ -18,9 +19,9 @@ export default function MyProfile() {
         </Text>
       </View>
       <View style={styles.countContainer}>
-        <CountTitleText title="내가 쓴 일기" count={4} />
-        <CountTitleText title="공유한 일기" count={2} />
-        <CountTitleText title="공유받은 일기" count={6} />
+        <CountTitleText title="내가 남긴 하루" count={4} onPress={onPress} />
+        <CountTitleText title="공유 받은 하루" count={2} onPress={onPress} />
+        <CountTitleText title="공유한 하루" count={6} onPress={onPress} />
       </View>
     </View>
   );

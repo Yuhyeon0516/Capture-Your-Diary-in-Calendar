@@ -1,13 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
-import { FontAwesome } from "@expo/vector-icons";
 
 type SettingSectionProps = {
   title: string;
   rightIcon?: () => React.JSX.Element;
   leftIcon?: () => React.JSX.Element;
   onPress: () => void;
+  disabled?: boolean;
 };
 
 export default function SettingSection({
@@ -15,9 +15,10 @@ export default function SettingSection({
   rightIcon = () => <></>,
   leftIcon = () => <></>,
   onPress,
+  disabled = false,
 }: SettingSectionProps) {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} disabled={disabled}>
       <View style={styles.container}>
         <View style={{ width: 30 }}>{leftIcon()}</View>
         <Text
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 10,
     gap: 8,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.black,
+    borderBottomWidth: 1,
+    borderColor: Colors.gray,
   },
 });

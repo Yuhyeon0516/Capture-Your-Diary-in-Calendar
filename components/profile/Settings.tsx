@@ -4,21 +4,23 @@ import SectionTitle from "./SectionTitle";
 import SettingSection from "./SettingSection";
 import Colors from "@/constants/Colors";
 import {
-  FontAwesome,
   FontAwesome6,
   MaterialCommunityIcons,
   MaterialIcons,
   Octicons,
 } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 export default function Settings() {
+  const router = useRouter();
+
   function onPress() {
     console.log("press");
   }
 
   return (
     <View style={styles.container}>
-      <SectionTitle text="환경설정" />
+      <SectionTitle text="기타" />
 
       <SettingSection
         title="자주 묻는 질문"
@@ -28,7 +30,7 @@ export default function Settings() {
         leftIcon={() => (
           <MaterialIcons name="question-mark" color={Colors.black} size={24} />
         )}
-        onPress={onPress}
+        onPress={() => router.push("/profile/question")}
       />
       <SettingSection
         title="문의하기"
@@ -42,7 +44,7 @@ export default function Settings() {
             size={24}
           />
         )}
-        onPress={onPress}
+        onPress={() => router.push("/profile/inquire")}
       />
       <SettingSection
         title="앱 라이센스 및 오픈소스"
@@ -56,7 +58,7 @@ export default function Settings() {
             size={24}
           />
         )}
-        onPress={onPress}
+        onPress={() => router.push("/profile/licence")}
       />
       <SettingSection
         title="앱 버전"
@@ -64,27 +66,35 @@ export default function Settings() {
           <Octicons name="versions" color={Colors.black} size={24} />
         )}
         rightIcon={() => (
-          <Text
-            style={{ fontSize: 18, fontWeight: "bold", color: Colors.black }}
-          >
-            v1.0.0
-          </Text>
+          <View style={{ alignItems: "center" }}>
+            <Text
+              style={{ fontSize: 18, fontWeight: "bold", color: Colors.black }}
+            >
+              v1.0.0
+            </Text>
+            <Text
+              style={{ fontSize: 12, fontWeight: "bold", color: Colors.black }}
+            >
+              (24.03)
+            </Text>
+          </View>
         )}
-        onPress={onPress}
+        onPress={() => {}}
+        disabled
       />
       <SettingSection
         title="로그아웃"
         leftIcon={() => (
           <MaterialIcons name="logout" color={Colors.black} size={24} />
         )}
-        onPress={onPress}
+        onPress={() => {}}
       />
       <SettingSection
         title="회원탈퇴"
         leftIcon={() => (
           <FontAwesome6 name="user-xmark" color={Colors.black} size={22} />
         )}
-        onPress={onPress}
+        onPress={() => {}}
       />
     </View>
   );

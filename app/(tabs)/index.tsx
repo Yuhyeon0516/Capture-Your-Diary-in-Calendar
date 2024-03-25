@@ -19,7 +19,7 @@ import {
   TestIds,
 } from "react-native-google-mobile-ads";
 import { getMyDiary } from "@/utils/supabase";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { DIARY } from "@/utils/recoil";
 
 export default function index() {
