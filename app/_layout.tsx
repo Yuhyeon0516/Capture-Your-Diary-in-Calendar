@@ -1,10 +1,12 @@
+import Colors from "@/constants/Colors";
 import { SCREENTYPE } from "@/utils/recoil";
 import { getScreenType } from "@/utils/supabase";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
 import { RecoilRoot, useRecoilState } from "recoil";
 
 export {
@@ -55,9 +57,17 @@ function RootLayoutNav() {
       const screenType = await getScreenType();
       setScreen(screenType);
     })();
-  }, [setScreen]);
+  }, [setScreen, getScreenType]);
 
-  return screen !== "auth" ? (
+  if (!screen) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size={"large"} color={Colors.primary} />
+      </View>
+    );
+  }
+
+  return screen === "auth" ? (
     <Stack>
       <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
       <Stack.Screen name="(auth)/register" options={{ headerShown: false }} />

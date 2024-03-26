@@ -1,8 +1,8 @@
 import { Diary } from "@/types/diary";
 import { atom } from "recoil";
 
-export const SCREENTYPE = atom<"auth" | "main">({
-  default: "auth",
+export const SCREENTYPE = atom<"auth" | "main" | null>({
+  default: null,
   key: "SCREENTYPE",
 });
 

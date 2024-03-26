@@ -5,11 +5,19 @@ import Colors from "@/constants/Colors";
 type PrimaryButtonProp = {
   text: string;
   onPress: () => void;
+  marginTop?: number;
 };
 
-export default function PrimaryButton({ text, onPress }: PrimaryButtonProp) {
+export default function PrimaryButton({
+  text,
+  onPress,
+  marginTop = 20,
+}: PrimaryButtonProp) {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.container, { marginTop: marginTop }]}
+      onPress={onPress}
+    >
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );
@@ -20,7 +28,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 60,
     backgroundColor: Colors.primary,
-    marginTop: 20,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
