@@ -13,7 +13,8 @@ import CustomTextInput from "@/components/common/CustomTextInput";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import { useRouter } from "expo-router";
 import HorizontalDivider from "@/components/common/HorizontalDivider";
-import GoogleSvg from "@/assets/icons/GoogleSvg";
+import GoogleSvg from "@/components/login/GoogleSvg";
+import KakaoSvg from "@/components/login/KakaoSvg";
 
 export default function login() {
   const [email, setEmail] = useState("");
@@ -87,13 +88,15 @@ export default function login() {
         }}
       >
         <TouchableOpacity
-          style={{
-            padding: 8,
-            backgroundColor: Colors.white,
-            borderRadius: 30,
-          }}
+          style={[styles.iconContainer, { backgroundColor: Colors.white }]}
         >
           <GoogleSvg />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.iconContainer, { backgroundColor: Colors.kakao }]}
+        >
+          <KakaoSvg />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -114,5 +117,9 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: "center",
     marginTop: 8,
+  },
+  iconContainer: {
+    padding: 8,
+    borderRadius: 30,
   },
 });
