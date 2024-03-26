@@ -12,6 +12,8 @@ import Colors from "@/constants/Colors";
 import CustomTextInput from "@/components/common/CustomTextInput";
 import PrimaryButton from "@/components/common/PrimaryButton";
 import { useRouter } from "expo-router";
+import HorizontalDivider from "@/components/common/HorizontalDivider";
+import GoogleSvg from "@/assets/icons/GoogleSvg";
 
 export default function login() {
   const [email, setEmail] = useState("");
@@ -69,6 +71,31 @@ export default function login() {
           </Text>
         </TouchableOpacity>
       </View>
+
+      <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+        <HorizontalDivider />
+        <Text style={{ color: Colors.black }}>또는</Text>
+        <HorizontalDivider />
+      </View>
+
+      <View
+        style={{
+          flexDirection: "row",
+          gap: 10,
+          alignItems: "center",
+          marginTop: 10,
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            padding: 8,
+            backgroundColor: Colors.white,
+            borderRadius: 30,
+          }}
+        >
+          <GoogleSvg />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -78,7 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.white,
+    backgroundColor: "whitesmoke",
     paddingHorizontal: 20,
     gap: 10,
   },
