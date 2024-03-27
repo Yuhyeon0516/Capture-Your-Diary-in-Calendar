@@ -97,7 +97,7 @@ export async function getMyDiary() {
 }
 
 export async function signup(email: string, password: string) {
-  await supabase.auth.signUp({
+  const { error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -106,8 +106,33 @@ export async function signup(email: string, password: string) {
       },
     },
   });
+
+  if (error) {
+    if (error.message.includes("User already registered")) {
+      Alert.alert("이미 가입된 회원입니다.");
+      return;
+    }
+
+    Alert.alert("알 수 없는 에러가 발생하였습니다.");
+  }
 }
 
 export async function signout() {
   await supabase.auth.signOut();
+}
+
+export async function signin(email: string, password: string) {
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    console.log(error);
+    if (error.message.includes("Invalid login credentials")) {
+      Alert.alert("이메일 또는 비밀번호가 잘못되었습니다.");
+      return;
+    }
+    Alert.alert("알 수 없는 에러가 발생하였습니다.");
+  }
 }

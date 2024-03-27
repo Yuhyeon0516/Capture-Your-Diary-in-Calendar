@@ -1,10 +1,12 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs, useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { View, StyleSheet } from "react-native";
 import Colors from "@/constants/Colors";
 
 export default function TabLayout() {
+  const params = useLocalSearchParams();
+
   return (
     <Tabs
       screenOptions={{

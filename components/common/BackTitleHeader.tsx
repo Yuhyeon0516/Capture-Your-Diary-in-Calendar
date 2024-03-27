@@ -2,16 +2,18 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 type BackTitleHeaderProps = {
   text: string;
 };
 
 export default function BackTitleHeader({ text }: BackTitleHeaderProps) {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{text}</Text>
-      <TouchableOpacity style={styles.icon}>
+      <TouchableOpacity style={styles.icon} onPress={() => router.back()}>
         <MaterialIcons name="chevron-left" size={30} color={Colors.black} />
       </TouchableOpacity>
     </View>
