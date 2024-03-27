@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   StyleSheet,
@@ -15,6 +16,7 @@ import { useRouter } from "expo-router";
 import HorizontalDivider from "@/components/common/HorizontalDivider";
 import GoogleSvg from "@/components/login/GoogleSvg";
 import KakaoSvg from "@/components/login/KakaoSvg";
+import { signin } from "@/utils/supabase";
 
 export default function login() {
   const [email, setEmail] = useState("");
@@ -31,6 +33,15 @@ export default function login() {
 
   function onPressRegister() {
     router.push("/register");
+  }
+
+  async function onPressLogin() {
+    if (!email) {
+      Alert.alert("이메일을 입력해주세요.");
+      return;
+    }
+
+    await signin(email, password);
   }
 
   return (
@@ -57,7 +68,7 @@ export default function login() {
             marginTop={10}
           />
         </View>
-        <PrimaryButton text="로그인" onPress={() => {}} marginTop={15} />
+        <PrimaryButton text="로그인" onPress={onPressLogin} marginTop={15} />
       </KeyboardAvoidingView>
 
       <View style={styles.registerButtonContainer}>
