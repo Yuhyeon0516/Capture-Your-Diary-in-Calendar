@@ -18,9 +18,10 @@ import {
   BannerAdSize,
   TestIds,
 } from "react-native-google-mobile-ads";
-import { getMyDiary, getUser } from "@/utils/supabase";
+import { getMyDiary, getUser, setUserCode } from "@/utils/supabase";
 import { useSetRecoilState } from "recoil";
 import { DIARY, USER } from "@/utils/recoil";
+import { createUUID } from "@/utils/util";
 
 export default function index() {
   const [loading, setLoading] = useState(false);
@@ -34,10 +35,20 @@ export default function index() {
       setLoading(true);
       const user = await getUser();
 
-      setUser({
-        email: user!.user_metadata.email,
-        userCode: user!.user_metadata.userCode,
-      });
+      if (!user!.user_metadata.userCode) {
+        const userCode = createUUID();
+        await setUserCode(userCode);
+
+        setUser({
+          email: user!.user_metadata.email,
+          userCode,
+        });
+      } else {
+        setUser({
+          email: user!.user_metadata.email,
+          userCode: user!.user_metadata.userCode,
+        });
+      }
 
       const diary = await getMyDiary(user!.user_metadata.userCode);
       setDiary(diary);

@@ -153,6 +153,17 @@ export async function signinSocial(provider: string, token: string) {
 
   if (error) {
     Alert.alert("알 수 없는 에러가 발생하였습니다.");
-    return;
+  }
+}
+
+export async function setUserCode(userCode: string) {
+  const { error } = await supabase.auth.updateUser({
+    data: {
+      userCode,
+    },
+  });
+
+  if (error) {
+    Alert.alert("알 수 없는 에러가 발생하였습니다.");
   }
 }
