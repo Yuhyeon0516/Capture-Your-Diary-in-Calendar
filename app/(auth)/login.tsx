@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Image,
   KeyboardAvoidingView,
   StyleSheet,
@@ -6,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Colors from "@/constants/Colors";
 import CustomTextInput from "@/components/common/CustomTextInput";
@@ -15,11 +16,13 @@ import { useRouter } from "expo-router";
 import HorizontalDivider from "@/components/common/HorizontalDivider";
 import GoogleSvg from "@/components/login/GoogleSvg";
 import KakaoSvg from "@/components/login/KakaoSvg";
+import { getUser } from "@/utils/supabase";
 
 export default function login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   function onChangeEmail(value: string) {
     setEmail(value);
@@ -31,6 +34,25 @@ export default function login() {
 
   function onPressRegister() {
     router.push("/register");
+  }
+
+  useEffect(() => {
+    (async () => {
+      const user = await getUser();
+
+      if (user) {
+        router.replace("/(tabs)");
+      }
+      setLoading(false);
+    })();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator color={Colors.primary} size={"large"} />
+      </View>
+    );
   }
 
   return (
