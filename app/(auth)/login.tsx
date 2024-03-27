@@ -16,12 +16,20 @@ import { useRouter } from "expo-router";
 import HorizontalDivider from "@/components/common/HorizontalDivider";
 import GoogleSvg from "@/components/login/GoogleSvg";
 import KakaoSvg from "@/components/login/KakaoSvg";
-import { signin } from "@/utils/supabase";
+import { signin, signinSocial } from "@/utils/supabase";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 export default function login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+  GoogleSignin.configure({
+    webClientId:
+      "17409587312-1btp4minn1ur6903ifsjk1np5u2jsju5.apps.googleusercontent.com",
+    iosClientId:
+      "17409587312-ls406369inv1beb0u195abprso0p80pk.apps.googleusercontent.com",
+  });
 
   function onChangeEmail(value: string) {
     setEmail(value);
@@ -42,6 +50,19 @@ export default function login() {
     }
 
     await signin(email, password);
+  }
+
+  async function onPressGoogle() {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+
+      if (userInfo.idToken) {
+        await signinSocial("google", userInfo.idToken);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -100,6 +121,7 @@ export default function login() {
       >
         <TouchableOpacity
           style={[styles.iconContainer, { backgroundColor: Colors.white }]}
+          onPress={onPressGoogle}
         >
           <GoogleSvg />
         </TouchableOpacity>
