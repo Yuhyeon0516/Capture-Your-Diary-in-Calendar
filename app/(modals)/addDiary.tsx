@@ -1,14 +1,44 @@
-import { ActivityIndicator, Platform, StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import {
+  ActivityIndicator,
+  Alert,
+  Platform,
+  StyleSheet,
+  View,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import TitleCloseHeader from "@/components/common/TitleCloseHeader";
 import AddDiary from "@/components/addDiary/AddDiary";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Colors from "@/constants/Colors";
+import * as ImagePicker from "expo-image-picker";
+import { useRouter } from "expo-router";
 
 export default function AddDiaryPage() {
   const safeAreaInsets = useSafeAreaInsets();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      const { granted } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!granted) {
+        Alert.alert(
+          "앨범 접근 권한을 허용해주세요.",
+          "하루를 추가하려면 사진 업로드를 위해 설정에서 사진 접근 권한을 허용해주세요.",
+          [
+            {
+              text: "확인",
+              onPress: () => {
+                router.back();
+              },
+            },
+          ]
+        );
+      }
+    })();
+  }, []);
 
   return (
     <View
