@@ -144,3 +144,15 @@ export async function getUser() {
 
   return user;
 }
+
+export async function signinSocial(provider: string, token: string) {
+  const { error } = await supabase.auth.signInWithIdToken({
+    provider,
+    token,
+  });
+
+  if (error) {
+    Alert.alert("알 수 없는 에러가 발생하였습니다.");
+    return;
+  }
+}
