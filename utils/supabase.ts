@@ -87,11 +87,11 @@ export async function uploadDiaryAndImage(
   return data[0] as Diary;
 }
 
-export async function getMyDiary() {
+export async function getMyDiary(userCode: string) {
   const diary = await supabase
     .from("diary")
     .select()
-    .filter("user_code", "eq", "1234");
+    .filter("user_code", "eq", userCode);
 
   return diary.data as Diary[];
 }
@@ -135,4 +135,12 @@ export async function signin(email: string, password: string) {
     }
     Alert.alert("알 수 없는 에러가 발생하였습니다.");
   }
+}
+
+export async function getUser() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  return user;
 }

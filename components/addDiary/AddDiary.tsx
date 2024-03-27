@@ -17,8 +17,8 @@ import { useRouter } from "expo-router";
 import CustomTextInput from "../common/CustomTextInput";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import PrimaryButton from "../common/PrimaryButton";
-import { useSetRecoilState } from "recoil";
-import { DIARY } from "@/utils/recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { DIARY, USER } from "@/utils/recoil";
 
 type AddDiaryProp = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,6 +33,7 @@ export default function AddDiary({ setIsLoading }: AddDiaryProp) {
   const router = useRouter();
   const safeAreaInsets = useSafeAreaInsets();
   const setDiary = useSetRecoilState(DIARY);
+  const user = useRecoilValue(USER);
 
   async function getImage() {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -72,15 +73,15 @@ export default function AddDiary({ setIsLoading }: AddDiaryProp) {
 
     setIsLoading(true);
     try {
-      await uploadImage(imageResult, 300, "1234");
-      await uploadImage(imageResult, 150, "1234");
-      const result = await uploadImage(imageResult, 50, "1234");
+      await uploadImage(imageResult, 300, user.userCode);
+      await uploadImage(imageResult, 150, user.userCode);
+      const result = await uploadImage(imageResult, 50, user.userCode);
       if (!result) {
         Alert.alert("이미지 경로 에러", "이미지의 경로를 찾을 수 없습니다.");
         throw Error();
       }
       const diaryResult = await uploadDiaryAndImage(
-        "1234",
+        user.userCode,
         title,
         description,
         result!
@@ -92,6 +93,7 @@ export default function AddDiary({ setIsLoading }: AddDiaryProp) {
         router.back();
       }, 300);
     } catch (error) {
+      Alert.alert("알 수 없는 에러가 발생하였습니다.");
     } finally {
       setIsLoading(false);
     }
