@@ -6,11 +6,12 @@ import { Alert, Platform } from "react-native";
 import dayjs from "dayjs";
 import * as ImageManipulator from "expo-image-manipulator";
 import { Diary } from "@/types/diary";
+import { createUUID } from "./util";
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL as string;
 const supabaseKey = process.env.EXPO_PUBLIC_SUPABASE_KEY as string;
 
-const supabase = createClient(supabaseUrl, supabaseKey, {
+export const supabase = createClient(supabaseUrl, supabaseKey, {
   auth: {
     storage: AsyncStorage,
     autoRefreshToken: true,
@@ -86,24 +87,6 @@ export async function uploadDiaryAndImage(
   return data[0] as Diary;
 }
 
-export async function getUser() {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  return user;
-}
-
-export async function getScreenType(): Promise<"auth" | "main"> {
-  const user = await getUser();
-
-  if (!user) {
-    return "auth";
-  }
-
-  return "main";
-}
-
 export async function getMyDiary() {
   const diary = await supabase
     .from("diary")
@@ -111,4 +94,20 @@ export async function getMyDiary() {
     .filter("user_code", "eq", "1234");
 
   return diary.data as Diary[];
+}
+
+export async function signup(email: string, password: string) {
+  await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        userCode: createUUID(),
+      },
+    },
+  });
+}
+
+export async function signout() {
+  await supabase.auth.signOut();
 }
