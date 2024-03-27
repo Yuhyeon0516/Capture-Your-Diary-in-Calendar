@@ -10,12 +10,13 @@ import {
   Octicons,
 } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { signout } from "@/utils/supabase";
 
 export default function Settings() {
   const router = useRouter();
 
-  function onPress() {
-    console.log("press");
+  async function onPressSignout() {
+    await signout();
   }
 
   return (
@@ -87,7 +88,7 @@ export default function Settings() {
         leftIcon={() => (
           <MaterialIcons name="logout" color={Colors.black} size={24} />
         )}
-        onPress={() => {}}
+        onPress={onPressSignout}
       />
       <SettingSection
         title="회원탈퇴"
