@@ -1,4 +1,5 @@
 import { Diary } from "@/types/diary";
+import { User } from "@/types/user";
 import { atom } from "recoil";
 
 export const SCREENTYPE = atom<"auth" | "main" | null>({
@@ -9,4 +10,12 @@ export const SCREENTYPE = atom<"auth" | "main" | null>({
 export const DIARY = atom<Diary[]>({
   default: [],
   key: "DIARY",
+});
+
+export const USER = atom<User>({
+  default: {
+    email: "",
+    userCode: "",
+  },
+  key: "USER",
 });

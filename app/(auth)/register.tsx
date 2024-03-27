@@ -10,6 +10,7 @@ import { signup } from "@/utils/supabase";
 export default function register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   function onChangeEmail(value: string) {
     setEmail(value);
@@ -17,6 +18,10 @@ export default function register() {
 
   function onChangePassword(value: string) {
     setPassword(value);
+  }
+
+  function onChangePasswordConfirm(value: string) {
+    setPasswordConfirm(value);
   }
 
   async function onPressSignup() {
@@ -28,6 +33,10 @@ export default function register() {
     if (password.length < 6) {
       Alert.alert("비밀번호를 6글자 이상 입력해주세요.");
       return;
+    }
+
+    if (password !== passwordConfirm) {
+      Alert.alert("비밀번호가 일치하지 않습니다.");
     }
 
     await signup(email, password);
@@ -48,6 +57,14 @@ export default function register() {
         text="비밀번호"
         onChangeText={onChangePassword}
         value={password}
+        secureTextEntry
+        marginTop={10}
+      />
+
+      <CustomTextInput
+        text="비밀번호 확인"
+        onChangeText={onChangePasswordConfirm}
+        value={passwordConfirm}
         secureTextEntry
         marginTop={10}
       />

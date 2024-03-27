@@ -18,20 +18,28 @@ import {
   BannerAdSize,
   TestIds,
 } from "react-native-google-mobile-ads";
-import { getMyDiary } from "@/utils/supabase";
+import { getMyDiary, getUser } from "@/utils/supabase";
 import { useSetRecoilState } from "recoil";
-import { DIARY } from "@/utils/recoil";
+import { DIARY, USER } from "@/utils/recoil";
 
 export default function index() {
   const [loading, setLoading] = useState(false);
   const setDiary = useSetRecoilState(DIARY);
   const tabBarHeight = useBottomTabBarHeight();
   const router = useRouter();
+  const setUser = useSetRecoilState(USER);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const diary = await getMyDiary();
+      const user = await getUser();
+
+      setUser({
+        email: user!.user_metadata.email,
+        userCode: user!.user_metadata.userCode,
+      });
+
+      const diary = await getMyDiary(user!.user_metadata.userCode);
       setDiary(diary);
       setLoading(false);
     })();
