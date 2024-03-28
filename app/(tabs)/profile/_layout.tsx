@@ -5,9 +5,9 @@ export default function ProfileLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
-      <Stack.Screen name="licence" />
-      <Stack.Screen name="inquire" />
-      <Stack.Screen name="question" />
+      <Stack.Screen name="licence" options={{ presentation: "modal" }} />
+      <Stack.Screen name="inquire" options={{ presentation: "modal" }} />
+      <Stack.Screen name="question" options={{ presentation: "modal" }} />
     </Stack>
   );
 }

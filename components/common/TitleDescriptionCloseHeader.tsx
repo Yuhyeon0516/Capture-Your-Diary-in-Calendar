@@ -4,15 +4,15 @@ import { useRouter } from "expo-router";
 import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 
-type TitleCloseHeaderProp = {
+type TitleDescriptionCloseHeaderProp = {
   title: string;
   description: string;
 };
 
-export default function TitleCloseHeader({
+export default function TitleDescriptionCloseHeader({
   title,
   description,
-}: TitleCloseHeaderProp) {
+}: TitleDescriptionCloseHeaderProp) {
   const router = useRouter();
 
   return (
