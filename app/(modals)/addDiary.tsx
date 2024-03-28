@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import TitleCloseHeader from "@/components/common/TitleCloseHeader";
+import TitleCloseHeader from "@/components/common/TitleDescriptionCloseHeader";
 import AddDiary from "@/components/addDiary/AddDiary";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Colors from "@/constants/Colors";

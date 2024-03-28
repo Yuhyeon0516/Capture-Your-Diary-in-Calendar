@@ -34,7 +34,7 @@ export default function Settings() {
         onPress={() => router.push("/profile/question")}
       />
       <SettingSection
-        title="문의하기"
+        title="문의 및 건의하기"
         rightIcon={() => (
           <MaterialIcons name="chevron-right" color={Colors.black} size={24} />
         )}

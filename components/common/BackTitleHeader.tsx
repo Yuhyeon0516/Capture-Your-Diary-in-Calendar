@@ -23,7 +23,7 @@ export default function BackTitleHeader({ text }: BackTitleHeaderProps) {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 60,
+    height: 70,
     alignItems: "center",
     justifyContent: "center",
   },
